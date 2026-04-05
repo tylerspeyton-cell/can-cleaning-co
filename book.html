@@ -127,8 +127,8 @@
           <textarea id="b-notes" name="notes" rows="3" placeholder="Gate code, special instructions, etc."></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">Request Booking</button>
-        <p style="font-size:0.82rem; color:var(--text-xlight); text-align:center; margin-top:12px;">We'll confirm by phone or text within 24 hours. Payment collected day-of.</p>
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">Continue to Payment →</button>
+        <p style="font-size:0.82rem; color:var(--text-xlight); text-align:center; margin-top:12px;">You'll be taken to Square to securely complete your payment.</p>
       </form>
     </div>
 
@@ -164,6 +164,11 @@
     }
   };
 
+  const PAYMENT_LINKS = {
+    ONE_TIME: 'https://square.link/u/5kCfftB9',
+    MONTHLY: 'https://square.link/u/ufEBAgeW',
+  };
+
   // Form submission
   const form = document.getElementById('booking-form');
   if (form) {
@@ -179,8 +184,9 @@
           headers: { 'Accept': 'application/json' }
         });
         if (res.ok) {
-          form.style.display = 'none';
-          document.getElementById('booking-success').style.display = 'block';
+          const serviceType = document.getElementById('hidden-service-type').value;
+          const payLink = serviceType === 'Monthly Plan' ? PAYMENT_LINKS.MONTHLY : PAYMENT_LINKS.ONE_TIME;
+          window.location.href = payLink;
         } else {
           btn.textContent = 'Request Booking';
           btn.disabled = false;

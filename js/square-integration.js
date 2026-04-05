@@ -43,10 +43,8 @@ const SQUARE_CONFIG = {
 // ─── OPTION B: Square Payment Links ─────────────────────────────────────────
 // If using Square Payment Links (easier setup), paste your links here
 const PAYMENT_LINKS = {
-  // TODO: Replace with your Square Payment Link for one-time service
-  ONE_TIME: 'https://square.link/YOUR_ONE_TIME_LINK',
-  // TODO: Replace with your Square Payment Link for monthly subscription
-  MONTHLY: 'https://square.link/YOUR_MONTHLY_LINK',
+  ONE_TIME: 'https://square.link/u/5kCfftB9',
+  MONTHLY: 'https://square.link/u/ufEBAgeW',
 };
 
 // ─── Square Web Payments SDK ─────────────────────────────────────────────────
