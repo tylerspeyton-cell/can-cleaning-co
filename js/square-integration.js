@@ -43,7 +43,7 @@ const SQUARE_CONFIG = {
 // ─── OPTION B: Square Payment Links ─────────────────────────────────────────
 // If using Square Payment Links (easier setup), paste your links here
 const PAYMENT_LINKS = {
-  ONE_TIME: 'https://square.link/u/5kCfftB9',
+  ONE_TIME: 'https://square.link/u/nABuQJvF',
   MONTHLY: 'https://square.link/u/ufEBAgeW',
 };
 

@@ -165,7 +165,7 @@
   };
 
   const PAYMENT_LINKS = {
-    ONE_TIME: 'https://square.link/u/5kCfftB9',
+    ONE_TIME: 'https://square.link/u/nABuQJvF',
     MONTHLY: 'https://square.link/u/ufEBAgeW',
   };
 
@@ -188,8 +188,9 @@
           if (serviceType === 'Monthly Plan') {
             window.location.href = PAYMENT_LINKS.MONTHLY;
           } else {
-            const canCount = document.getElementById('b-cans').value || 1;
-            window.location.href = PAYMENT_LINKS.ONE_TIME + '?quantity=' + canCount;
+            const canCount = parseInt(document.getElementById('b-cans').value) || 1;
+            const amountCents = canCount * 1500;
+            window.location.href = PAYMENT_LINKS.ONE_TIME + '?amount=' + amountCents;
           }
         } else {
           btn.textContent = 'Request Booking';
