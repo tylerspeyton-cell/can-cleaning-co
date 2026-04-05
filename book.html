@@ -165,7 +165,13 @@
   };
 
   const PAYMENT_LINKS = {
-    ONE_TIME: 'https://square.link/u/nABuQJvF',
+    ONE_TIME: {
+      1: 'https://square.link/u/E6owlIOf',
+      2: 'https://square.link/u/Rh1nVnX0',
+      3: 'https://square.link/u/5glffrCe',
+      4: 'https://square.link/u/vmP7KW2s',
+      5: 'https://square.link/u/502xISqE',
+    },
     MONTHLY: 'https://square.link/u/ufEBAgeW',
   };
 
@@ -189,8 +195,14 @@
             window.location.href = PAYMENT_LINKS.MONTHLY;
           } else {
             const canCount = parseInt(document.getElementById('b-cans').value) || 1;
-            const amountCents = canCount * 1500;
-            window.location.href = PAYMENT_LINKS.ONE_TIME + '?amount=' + amountCents;
+            const payLink = PAYMENT_LINKS.ONE_TIME[canCount];
+            if (payLink) {
+              window.location.href = payLink;
+            } else {
+              alert('For 6+ cans please call us at (254) 229-8753 to book.');
+              btn.textContent = 'Continue to Payment →';
+              btn.disabled = false;
+            }
           }
         } else {
           btn.textContent = 'Request Booking';
