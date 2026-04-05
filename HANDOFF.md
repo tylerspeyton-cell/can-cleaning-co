@@ -1,4 +1,4 @@
-# Can Cleaning Co. — AI Handoff Document
+# Can Cleaning Co. — Handoff Document
 *Pass this file to a new AI to pick up where we left off.*
 
 ---
@@ -6,39 +6,42 @@
 ## Project Overview
 A complete, mobile-first website for **Can Cleaning Co.**, a family-owned residential and commercial trash can cleaning business serving the Dallas, TX area.
 
-**Location on disk:** `/Users/tylerpeyton/can-cleaning-co/`
+**Local path:** `/Users/tylerpeyton/can-cleaning-co/`
+**GitHub:** https://github.com/tylerspeyton-cell/can-cleaning-co
+**Live site:** https://can-cleaning-co.com (GitHub Pages — DNS pending full propagation)
 
 ---
 
-## Business Details (confirmed)
+## Business Details
 | Field | Value |
 |-------|-------|
 | Business Name | Can Cleaning Co. |
-| Phone | (254) 229-8753 / tel:+12542298753 |
+| Phone | (254) 229-8753 |
 | Email | info@can-cleaning-co.com |
-| Service Area | Dallas, TX and surrounding suburbs |
-| Facebook | To be added later (placeholder `href="#"` currently in all footers) |
+| Service Area | Dallas and surrounding areas |
 | One-time price | $15 per trash can |
 | Monthly price | $45/month flat (all cans) |
+| Facebook | Placeholder `href="#"` in all footers — add real URL when ready |
 
 ---
 
 ## File Structure
 ```
 can-cleaning-co/
-├── index.html           Home page
-├── book.html            Residential booking (3-step: service → schedule/details → payment)
-├── monthly-plan.html    Monthly plan landing page
-├── commercial.html      Commercial quote request form
-├── about.html           About Us
-├── contact.html         Contact + service area checker
-├── css/styles.css       All styles — CSS variables for brand colors at top
-├── js/main.js           Nav, FAQ accordion, Dallas zip/city checker, form validation
-├── js/booking.js        3-step booking form, live price calc, Google Calendar init
-├── js/square-integration.js  Square Web Payments SDK placeholder
-├── images/logo.png      ✅ Logo added (family cartoon with cleaning equipment)
-├── SETUP.md             Full setup instructions
-└── HANDOFF.md           This file
+├── index.html             Home page
+├── book.html              Booking page — date picker form → Formspree
+├── monthly-plan.html      Monthly plan landing page
+├── commercial.html        Commercial quote request form
+├── about.html             About Us
+├── contact.html           Contact + service area checker
+├── css/styles.css         All styles — CSS variables for brand colors at top
+├── js/main.js             Nav, FAQ accordion, Dallas zip/city checker, form validation
+├── js/booking.js          Old booking logic (not used on book.html anymore — kept for reference)
+├── js/square-integration.js  Square SDK placeholder (not active)
+├── images/logo.png        Logo (family cartoon with cleaning equipment)
+├── CNAME                  can-cleaning-co.com (GitHub Pages custom domain)
+├── SETUP.md               Setup instructions
+└── HANDOFF.md             This file
 ```
 
 ---
@@ -46,47 +49,60 @@ can-cleaning-co/
 ## What's Built & Working
 - [x] 6 fully designed, mobile-responsive HTML pages
 - [x] Sticky navigation with mobile hamburger menu
-- [x] Hero section with floating logo animation
-- [x] How It Works (3 steps), Benefits, Pricing cards, FAQ accordion
+- [x] Hero section with logo, tagline, booking CTAs
+- [x] How It Works, Benefits, Pricing cards, FAQ accordion
 - [x] Dallas service area zip code + city checker widget
 - [x] Testimonial cards (placeholder copy — needs real reviews)
-- [x] Email signup form (currently simulated — needs email provider)
-- [x] 3-step residential booking form with live price calculator
-- [x] Google Calendar Appointment Scheduling embed in booking step 2
-- [x] Square payment integration structure with full setup instructions
-- [x] Commercial quote request form (13 fields, simulated submission)
-- [x] Contact form (simulated submission)
-- [x] Sticky mobile CTA bar (bottom of screen on phones)
+- [x] Booking page with service picker (one-time vs monthly) + date picker form
+- [x] Booking form submits via Formspree — form ID: `mbdppzga`
+- [x] Commercial quote request form
+- [x] Contact form
+- [x] Sticky mobile CTA bar
 - [x] Footer with contact info, links, social placeholders
-- [x] Real phone + email set on all pages
+- [x] Deployed to GitHub Pages with custom domain can-cleaning-co.com
 
 ---
 
-## Still Needs To Be Done (user's TODO list)
+## Still Needs To Be Done
 
-### High Priority (needed to go live)
-1. **Square payments** — open `js/square-integration.js`, follow the instructions to add Application ID + Location ID. Easiest option: use Square Payment Links (no backend needed).
-2. **Google Calendar scheduling** — in `book.html` around line 168, replace `REPLACE_WITH_YOUR_SCHEDULE_ID` with the real schedule ID from Google Calendar → Create → Appointment Schedule.
-3. **Contact/commercial form submissions** — currently simulated. Connect to Formspree (free, easiest) or Netlify Forms. Instructions in `SETUP.md`.
+### DNS (in progress)
+- Add 4 A records pointing `@` to GitHub's IPs and 1 CNAME `www` → `tylerspeyton-cell.github.io` in Google Workspace DNS (Squarespace interface)
+- GitHub IPs: `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
 
-### Lower Priority
-4. **Facebook link** — user said they'll add it later. Search all HTML files for `href="#" aria-label="Facebook"` and replace `#` with the real Facebook URL.
-5. **Real testimonials** — replace the 3 placeholder testimonial cards in `index.html` and `monthly-plan.html`.
-6. **Business hours** — update the hours table in `contact.html` if needed (currently Mon–Sat 7am–6pm).
-7. **Deploy** — drag-and-drop to Netlify or push to GitHub Pages. Full instructions in `SETUP.md`.
+### Content
+- **Real testimonials** — replace placeholder cards in `index.html` and `monthly-plan.html`
+- **Facebook link** — search all HTML files for `href="#" aria-label="Facebook"` and replace `#` with real URL
+- **Business hours** — update table in `contact.html` if needed (currently Mon–Sat 7am–6pm)
+
+### Forms
+- **Commercial form** (`commercial.html`) — currently simulated, not connected to Formspree yet
+- **Contact form** (`contact.html`) — currently simulated, not connected to Formspree yet
+- Both can be connected to Formspree the same way as the booking form
+
+---
+
+## Booking Flow (current)
+`book.html` uses a simple HTML form — no Calendly, no Square, no multi-step wizard.
+
+1. Customer picks **One-Time** or **Monthly Plan**
+2. Fills out name, phone, email, address, number of cans, preferred date
+3. Submits → goes to Formspree (`https://formspree.io/f/mbdppzga`) → owner gets email
+4. Owner contacts customer to confirm
+
+No time slots — customers pick any date. Unlimited bookings per day.
+Payment collected day-of (cash, Venmo, card).
 
 ---
 
 ## Tech Stack
 - Pure HTML5, CSS3, vanilla JavaScript — no frameworks, no build tools
-- Google Fonts: Inter
-- Square Web Payments SDK (not yet active — placeholder)
-- Google Calendar Appointment Scheduling embed (not yet active — placeholder)
-- Fully static — can be hosted anywhere (GitHub Pages, Netlify, Vercel, any web host)
+- Google Fonts: Nunito
+- Formspree for booking form submissions (form ID: `mbdppzga`)
+- Hosted on GitHub Pages with custom domain
 
 ---
 
-## Brand Colors (in css/styles.css)
+## Brand Colors
 ```css
 --blue:        #1565C0   /* Primary */
 --blue-dark:   #0D47A1   /* Dark blue */
@@ -100,12 +116,10 @@ can-cleaning-co/
 ## Key Code Locations
 | What | File | Where |
 |------|------|--------|
-| Pricing config | `js/booking.js` | Top of file — `const PRICING = {...}` |
-| Square credentials | `js/square-integration.js` | Top — `SQUARE_CONFIG` object |
-| Square payment links | `js/square-integration.js` | `PAYMENT_LINKS` object |
-| Google Calendar URL | `book.html` | ~line 168 — iframe `src` attribute |
+| Pricing config | `js/booking.js` | Top — `const PRICING = {...}` |
+| Formspree form ID | `book.html` | `action="https://formspree.io/f/mbdppzga"` |
+| Service switcher | `book.html` | `switchService()` in bottom `<script>` |
 | Dallas zip codes | `js/main.js` | `DALLAS_ZIPS` Set |
 | Dallas city names | `js/main.js` | `DALLAS_CITIES` array |
 | Facebook link | All HTML footers | `href="#" aria-label="Facebook"` |
-| Contact form submit | `contact.html` | Bottom `<script>` block |
-| Commercial form submit | `commercial.html` | Bottom `<script>` block |
+| Brand CSS variables | `css/styles.css` | Top of file |
