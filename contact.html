@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us | Can Cleaning Co. — Dallas, TX</title>
+  <meta name="description" content="Contact Can Cleaning Co. for questions about trash can cleaning in the Dallas area. Call, email, or fill out our contact form." />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- ─── Navigation ─────────────────────────── -->
+<nav class="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="Can Cleaning Co." />
+        <span class="nav-logo-text">Can Cleaning Co.<span>Dallas, TX</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="book.html">Book Service</a></li>
+        <li><a href="monthly-plan.html">Monthly Plan</a></li>
+        <li><a href="commercial.html">Commercial</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="book.html" class="btn btn-primary btn-sm nav-cta">Book Now</a></li>
+      </ul>
+      <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="mobile-nav">
+  <a href="index.html">Home</a>
+  <a href="book.html">Book Service</a>
+  <a href="monthly-plan.html">Monthly Plan</a>
+  <a href="commercial.html">Commercial</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="book.html" class="btn btn-primary">Book Now</a>
+</div>
+
+<!-- ─── Page Hero ──────────────────────────── -->
+<section class="page-hero">
+  <div class="container">
+    <h1>Get in Touch</h1>
+    <p>We'd love to hear from you. Whether you have a question, want to check your service area, or just need help getting started — we're here.</p>
+  </div>
+</section>
+
+<!-- ─── Contact Section ─────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="contact-layout">
+
+      <!-- ─── Contact Info Card ─────────────── -->
+      <div class="contact-info-card">
+        <h3>Contact Information</h3>
+
+        <!-- TODO: Update all contact details below -->
+        <div class="contact-item">
+          <div class="contact-item-icon">📞</div>
+          <div>
+            <strong>Phone</strong>
+            <span><a href="tel:+12542298753" style="color:var(--blue);">(254) 229-8753</a></span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-icon">✉️</div>
+          <div>
+            <strong>Email</strong>
+            <span><a href="mailto:info@can-cleaning-co.com" style="color:var(--blue);">info@can-cleaning-co.com</a></span>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div>
+            <strong>Service Area</strong>
+            <span>Dallas and surrounding suburbs, TX</span>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h4 style="margin-bottom:12px;">Business Hours</h4>
+        <table class="hours-table">
+          <tr><td>Monday</td><td>7:00 AM – 3:00 PM</td></tr>
+          <tr><td>Tuesday</td><td>7:00 AM – 3:00 PM</td></tr>
+          <tr><td>Wednesday</td><td>7:00 AM – 3:00 PM</td></tr>
+          <tr><td>Thursday</td><td>7:00 AM – 3:00 PM</td></tr>
+          <tr><td>Friday</td><td>7:00 AM – 3:00 PM</td></tr>
+          <tr><td>Saturday</td><td>7:00 AM – 3:00 PM</td></tr>
+          <tr><td>Sunday</td><td>Closed</td></tr>
+        </table>
+
+        <div class="divider"></div>
+
+        <h4 style="margin-bottom:12px;">Follow Us</h4>
+        <div class="social-links" style="gap:12px;display:flex;">
+          <!-- TODO: Replace with your real social media URLs -->
+          <a href="#" class="social-link" style="background:var(--blue-pale);color:var(--blue);" aria-label="Facebook">f</a>
+          <a href="#" class="social-link" style="background:var(--blue-pale);color:var(--blue);" aria-label="Instagram">ig</a>
+          <a href="#" class="social-link" style="background:var(--blue-pale);color:var(--blue);" aria-label="Google Business">G</a>
+          <a href="#" class="social-link" style="background:var(--blue-pale);color:var(--blue);" aria-label="Nextdoor">N</a>
+        </div>
+      </div>
+
+      <!-- ─── Contact Form ───────────────────── -->
+      <div class="contact-form-card">
+        <h3 style="margin-bottom:6px;">Send Us a Message</h3>
+        <p style="margin-bottom:28px;font-size:0.93rem;">Not ready to book yet? Have a question? Just fill this out and we'll get back to you within 1 business day.</p>
+
+        <!-- Success message -->
+        <div class="success-message" id="contact-success">
+          <div class="success-icon">✉️</div>
+          <h3>Message Sent!</h3>
+          <p>Thanks for reaching out. We'll get back to you within 1 business day.</p>
+          <button class="btn btn-secondary mt-6" onclick="resetContactForm()" style="margin-top:16px;">Send Another Message</button>
+        </div>
+
+        <form id="contact-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="c-name">Your Name <span class="req">*</span></label>
+              <input type="text" id="c-name" name="name" placeholder="Jane Smith" required />
+              <div class="form-error"></div>
+            </div>
+            <div class="form-group">
+              <label for="c-email">Email Address <span class="req">*</span></label>
+              <input type="email" id="c-email" name="email" placeholder="jane@example.com" required />
+              <div class="form-error"></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="c-phone">Phone Number (optional)</label>
+              <input type="tel" id="c-phone" name="phone" placeholder="(254) 229-8753" />
+            </div>
+            <div class="form-group">
+              <label for="c-zip">Your Zip Code (optional)</label>
+              <input type="text" id="c-zip" name="zip" placeholder="75201" maxlength="5" />
+              <div class="form-hint">Helps us confirm your service area.</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="c-subject">What's this about? <span class="req">*</span></label>
+            <select id="c-subject" name="subject" required>
+              <option value="">Select a topic...</option>
+              <option>General question</option>
+              <option>Service area inquiry</option>
+              <option>Existing booking / reschedule</option>
+              <option>Monthly subscription</option>
+              <option>Commercial service</option>
+              <option>Feedback or complaint</option>
+              <option>Other</option>
+            </select>
+            <div class="form-error"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="c-message">Message <span class="req">*</span></label>
+            <textarea id="c-message" name="message" placeholder="How can we help you?" rows="5" required></textarea>
+            <div class="form-error"></div>
+          </div>
+
+          <div class="form-group">
+            <div class="checkbox-group">
+              <input type="checkbox" id="c-promo" name="promo" />
+              <label for="c-promo">Sign me up for email deals and promotions (optional)</label>
+            </div>
+          </div>
+
+          <div class="alert" id="contact-alert"></div>
+
+          <button type="submit" class="btn btn-primary btn-lg btn-full" id="contact-submit">
+            <span class="default-text">Send Message</span>
+            <span class="loading-text"><span class="spinner"></span> Sending...</span>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── Service Area Check ──────────────────── -->
+<section class="service-area section-sm">
+  <div class="container">
+    <div class="area-content" style="gap:32px;">
+      <div class="area-text">
+        <span class="tag">Service Area</span>
+        <h2>Are We in Your Neighborhood?</h2>
+        <p>We serve the greater Dallas area. Enter your zip code or city below to find out if we can come to you.</p>
+        <div class="area-list">
+          <span class="area-chip">Dallas</span>
+          <span class="area-chip">Plano</span>
+          <span class="area-chip">Frisco</span>
+          <span class="area-chip">McKinney</span>
+          <span class="area-chip">Garland</span>
+          <span class="area-chip">Richardson</span>
+          <span class="area-chip">Irving</span>
+          <span class="area-chip">Allen</span>
+          <span class="area-chip">Carrollton</span>
+          <span class="area-chip">+ more</span>
+        </div>
+      </div>
+      <div class="area-check">
+        <h4>🗺️ Check Your Area</h4>
+        <p>Enter your zip code or city name:</p>
+        <form id="area-check-form">
+          <div class="area-input-row">
+            <input type="text" id="area-input" placeholder="e.g. 75201 or Plano" maxlength="30" />
+            <button type="submit" class="btn btn-primary btn-sm">Check</button>
+          </div>
+        </form>
+        <div id="area-result"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ─────────────────────────────────── -->
+<section class="cta-banner">
+  <div class="container">
+    <h2>Ready to Book?</h2>
+    <p>Don't wait — get your cans cleaned this week. Book online in under 2 minutes.</p>
+    <div class="cta-buttons">
+      <a href="book.html" class="btn btn-primary btn-lg">Book a Cleaning Now</a>
+      <a href="monthly-plan.html" class="btn btn-yellow btn-lg">See Monthly Plan</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── Footer ──────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="images/logo.png" alt="Can Cleaning Co." />
+        <p>Family-owned trash can cleaning in Dallas, TX.</p>
+      </div>
+      <div>
+        <h5>Quick Links</h5>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="book.html">Book a Cleaning</a></li>
+          <li><a href="monthly-plan.html">Monthly Plan</a></li>
+          <li><a href="commercial.html">Commercial</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+      <div></div>
+      <div class="footer-contact">
+        <h5>Contact</h5>
+        <p>📞 <a href="tel:+12542298753" style="color:rgba(255,255,255,0.65)">(254) 229-8753</a></p>
+        <p>✉️ <a href="mailto:info@can-cleaning-co.com" style="color:rgba(255,255,255,0.65)">info@can-cleaning-co.com</a></p>
+        <p>📍 Dallas, TX & surrounding areas</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Can Cleaning Co. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── Sticky Mobile CTA ───────────────────── -->
+<div class="sticky-mobile-cta">
+  <a href="tel:+12542298753" class="btn btn-yellow">📞 Call Us Now</a>
+  <a href="book.html" class="btn btn-white" style="color:var(--blue-dark);">Book Online</a>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('contact-submit');
+  const alert = document.getElementById('contact-alert');
+  const success = document.getElementById('contact-success');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    let valid = true;
+    form.querySelectorAll('[required]').forEach(field => {
+      if (!validateField(field)) valid = false;
+    });
+    if (!valid) {
+      form.querySelector('.invalid')?.focus();
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.classList.add('loading');
+
+    const data = {
+      name: document.getElementById('c-name').value,
+      email: document.getElementById('c-email').value,
+      phone: document.getElementById('c-phone').value,
+      zip: document.getElementById('c-zip').value,
+      subject: document.getElementById('c-subject').value,
+      message: document.getElementById('c-message').value,
+    };
+
+    // TODO: Connect to your form submission service
+    // Options:
+    //   Formspree: https://formspree.io (free tier available, no backend needed)
+    //   Netlify Forms: add data-netlify="true" attribute to <form>
+    //   EmailJS: https://www.emailjs.com (client-side email sending)
+    //
+    // Example Formspree:
+    //   const res = await fetch('https://formspree.io/f/YOUR_ID', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify(data),
+    //   });
+    //   if (res.ok) { showSuccess(); } else { showError(); }
+
+    // Simulated submission
+    setTimeout(() => {
+      form.style.display = 'none';
+      success.classList.add('show');
+      success.scrollIntoView({ behavior: 'smooth' });
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('loading');
+    }, 1000);
+  });
+});
+
+function resetContactForm() {
+  const form = document.getElementById('contact-form');
+  const success = document.getElementById('contact-success');
+  form.reset();
+  form.style.display = 'block';
+  success.classList.remove('show');
+}
+</script>
+</body>
+</html>

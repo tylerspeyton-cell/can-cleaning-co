@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Cleaning | Can Cleaning Co. — Dallas, TX</title>
+  <meta name="description" content="Book your residential trash can cleaning in Dallas. One-time service at $15 per can, or start your $45/month subscription." />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- ─── Navigation ─────────────────────────── -->
+<nav class="nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo.png" alt="Can Cleaning Co." />
+        <span class="nav-logo-text">Can Cleaning Co.<span>Dallas, TX</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="book.html" class="active">Book Service</a></li>
+        <li><a href="monthly-plan.html">Monthly Plan</a></li>
+        <li><a href="commercial.html">Commercial</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="book.html" class="btn btn-primary btn-sm nav-cta">Book Now</a></li>
+      </ul>
+      <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-mobile" id="mobile-nav">
+  <a href="index.html">Home</a>
+  <a href="book.html">Book Service</a>
+  <a href="monthly-plan.html">Monthly Plan</a>
+  <a href="commercial.html">Commercial</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <a href="book.html" class="btn btn-primary">Book Now</a>
+</div>
+
+<!-- ─── Page Hero ──────────────────────────── -->
+<section class="page-hero">
+  <div class="container">
+    <h1>Book Your Cleaning</h1>
+    <p>Pick your service below and choose a time that works for you — we'll take care of the rest!</p>
+  </div>
+</section>
+
+<!-- ─── Booking Section ─────────────────────── -->
+<section class="section" style="background: var(--bg);">
+  <div class="container" style="max-width: 700px;">
+
+    <!-- Service Picker -->
+    <div class="calendly-service-picker">
+      <button class="service-pick-btn active" id="btn-onetime" onclick="switchService('one-time')">
+        <span class="service-pick-icon">🗑️</span>
+        <span class="service-pick-label">One-Time Cleaning</span>
+        <span class="service-pick-price">$15 / can</span>
+      </button>
+      <button class="service-pick-btn" id="btn-monthly" onclick="switchService('monthly')">
+        <span class="service-pick-icon">📅</span>
+        <span class="service-pick-label">Monthly Plan</span>
+        <span class="service-pick-price">$45 / month — all cans</span>
+      </button>
+    </div>
+
+    <!-- Booking Form -->
+    <div style="background:var(--white); border-radius:var(--radius); border:1.5px solid var(--border); padding:32px 28px;">
+      <div id="booking-success" style="display:none; text-align:center; padding:24px 0;">
+        <div style="font-size:2.5rem; margin-bottom:12px;">✅</div>
+        <h3 style="margin-bottom:8px;">Booking Request Sent!</h3>
+        <p style="color:var(--text-light);">We'll confirm your appointment by phone or text within 24 hours.</p>
+        <p style="font-size:0.9rem; color:var(--text-xlight); margin-top:8px;">Questions? Call <a href="tel:+12542298753" style="color:var(--blue); font-weight:600;">(254) 229-8753</a></p>
+      </div>
+
+      <form id="booking-form" action="https://formspree.io/f/mbdppzga" method="POST" novalidate>
+        <input type="hidden" name="service_type" id="hidden-service-type" value="One-Time Cleaning" />
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="b-name">Name <span class="req">*</span></label>
+            <input type="text" id="b-name" name="name" required placeholder="Jane Smith" />
+          </div>
+          <div class="form-group">
+            <label for="b-phone">Phone <span class="req">*</span></label>
+            <input type="tel" id="b-phone" name="phone" required placeholder="(214) 555-0100" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="b-email">Email</label>
+          <input type="email" id="b-email" name="email" placeholder="jane@example.com" />
+        </div>
+
+        <div class="form-group">
+          <label for="b-address">Street Address <span class="req">*</span></label>
+          <input type="text" id="b-address" name="address" required placeholder="123 Main St" />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="b-city">City <span class="req">*</span></label>
+            <input type="text" id="b-city" name="city" required placeholder="Dallas" />
+          </div>
+          <div class="form-group">
+            <label for="b-zip">ZIP Code <span class="req">*</span></label>
+            <input type="text" id="b-zip" name="zip" required placeholder="75201" inputmode="numeric" maxlength="5" />
+          </div>
+        </div>
+
+        <div id="can-count-group" class="form-group">
+          <label for="b-cans">Number of Trash Cans <span class="req">*</span></label>
+          <input type="number" id="b-cans" name="can_count" required min="1" max="20" value="1" />
+        </div>
+
+        <div class="form-group">
+          <label for="b-date">Preferred Service Date <span class="req">*</span></label>
+          <input type="date" id="b-date" name="preferred_date" required />
+        </div>
+
+        <div class="form-group">
+          <label for="b-notes">Notes (optional)</label>
+          <textarea id="b-notes" name="notes" rows="3" placeholder="Gate code, special instructions, etc."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">Request Booking</button>
+        <p style="font-size:0.82rem; color:var(--text-xlight); text-align:center; margin-top:12px;">We'll confirm by phone or text within 24 hours. Payment collected day-of.</p>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function() {
+  // Set min date to tomorrow
+  const dateInput = document.getElementById('b-date');
+  if (dateInput) {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    dateInput.min = tomorrow.toISOString().split('T')[0];
+  }
+
+  // Service switcher
+  window.switchService = function(type) {
+    const btnOne = document.getElementById('btn-onetime');
+    const btnMon = document.getElementById('btn-monthly');
+    const canGroup = document.getElementById('can-count-group');
+    const hiddenType = document.getElementById('hidden-service-type');
+    if (type === 'one-time') {
+      btnOne.classList.add('active');
+      btnMon.classList.remove('active');
+      canGroup.style.display = 'block';
+      hiddenType.value = 'One-Time Cleaning';
+    } else {
+      btnOne.classList.remove('active');
+      btnMon.classList.add('active');
+      canGroup.style.display = 'none';
+      hiddenType.value = 'Monthly Plan';
+    }
+  };
+
+  // Form submission
+  const form = document.getElementById('booking-form');
+  if (form) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          document.getElementById('booking-success').style.display = 'block';
+        } else {
+          btn.textContent = 'Request Booking';
+          btn.disabled = false;
+          alert('Something went wrong. Please call us at (254) 229-8753 to book.');
+        }
+      } catch {
+        btn.textContent = 'Request Booking';
+        btn.disabled = false;
+        alert('Something went wrong. Please call us at (254) 229-8753 to book.');
+      }
+    });
+  }
+
+  // Pre-select plan from URL param
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('type') === 'monthly') switchService('monthly');
+})();
+</script>
+
+<!-- ─── Footer ──────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="images/logo.png" alt="Can Cleaning Co." />
+        <p>Family-owned trash can cleaning in Dallas, TX.</p>
+      </div>
+      <div>
+        <h5>Quick Links</h5>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="monthly-plan.html">Monthly Plan</a></li>
+          <li><a href="commercial.html">Commercial</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div></div>
+      <div class="footer-contact">
+        <h5>Contact</h5>
+        <p>📞 <a href="tel:+12542298753" style="color:rgba(255,255,255,0.65)">(254) 229-8753</a></p>
+        <p>✉️ <a href="mailto:info@can-cleaning-co.com" style="color:rgba(255,255,255,0.65)">info@can-cleaning-co.com</a></p>
+        <p>📍 Dallas, TX & surrounding areas</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Can Cleaning Co. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── Sticky Mobile CTA ───────────────────── -->
+<div class="sticky-mobile-cta">
+  <a href="tel:+12542298753" class="btn btn-white" style="color:var(--blue-dark);">📞 Call Us</a>
+  <a href="monthly-plan.html" class="btn btn-yellow">$45/mo Plan</a>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
