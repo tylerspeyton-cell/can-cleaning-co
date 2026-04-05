@@ -185,8 +185,12 @@
         });
         if (res.ok) {
           const serviceType = document.getElementById('hidden-service-type').value;
-          const payLink = serviceType === 'Monthly Plan' ? PAYMENT_LINKS.MONTHLY : PAYMENT_LINKS.ONE_TIME;
-          window.location.href = payLink;
+          if (serviceType === 'Monthly Plan') {
+            window.location.href = PAYMENT_LINKS.MONTHLY;
+          } else {
+            const canCount = document.getElementById('b-cans').value || 1;
+            window.location.href = PAYMENT_LINKS.ONE_TIME + '?quantity=' + canCount;
+          }
         } else {
           btn.textContent = 'Request Booking';
           btn.disabled = false;
