@@ -295,6 +295,7 @@ p { color: var(--text-light); }
   transform: rotate(10deg);
   z-index: 0;
 }
+.hero::marker { content: none; }
 .hero .container {
   position: relative;
   z-index: 1;
@@ -305,12 +306,37 @@ p { color: var(--text-light); }
   pointer-events: none;
   z-index: 0;
 }
+.hero-sparkles::before,
+.hero-sparkles::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  opacity: 0.32;
+}
+.hero-sparkles::before {
+  background-image:
+    radial-gradient(circle at 10% 18%, rgba(255,255,255,0.95) 0 2px, transparent 3px),
+    radial-gradient(circle at 18% 72%, rgba(255,255,255,0.75) 0 1.5px, transparent 3px),
+    radial-gradient(circle at 31% 38%, rgba(255,255,255,0.8) 0 1.5px, transparent 3px),
+    radial-gradient(circle at 47% 22%, rgba(255,255,255,0.85) 0 2px, transparent 3px),
+    radial-gradient(circle at 58% 78%, rgba(255,255,255,0.7) 0 1.5px, transparent 3px),
+    radial-gradient(circle at 72% 32%, rgba(255,255,255,0.9) 0 2px, transparent 3px),
+    radial-gradient(circle at 84% 62%, rgba(255,255,255,0.82) 0 1.5px, transparent 3px),
+    radial-gradient(circle at 92% 18%, rgba(255,255,255,0.7) 0 1.5px, transparent 3px);
+  animation: sparkle-field 10s linear infinite;
+}
+.hero-sparkles::after {
+  background-image: linear-gradient(112deg, transparent 24%, rgba(255,255,255,0.18) 44%, rgba(255,255,255,0.48) 50%, rgba(255,255,255,0.18) 56%, transparent 72%);
+  transform: translateX(-130%) skewX(-18deg);
+  animation: cleaning-sweep 5.5s ease-in-out infinite;
+}
 .sparkle {
   position: absolute;
   width: 22px;
   aspect-ratio: 1;
   opacity: 0;
-  animation: sparkle-drift 7s ease-in-out infinite;
+  animation: sparkle-drift 6.8s ease-in-out infinite;
 }
 .sparkle::before,
 .sparkle::after {
@@ -331,30 +357,69 @@ p { color: var(--text-light); }
   width: 100%;
   height: 3px;
 }
-.sparkle-1 { top: 16%; left: 10%; animation-delay: 0.2s; transform: scale(0.85); }
-.sparkle-2 { top: 22%; right: 14%; animation-delay: 1.4s; transform: scale(1.1); }
-.sparkle-3 { top: 56%; left: 18%; animation-delay: 2.4s; transform: scale(0.7); }
-.sparkle-4 { bottom: 18%; right: 20%; animation-delay: 3.2s; transform: scale(0.95); }
-.sparkle-5 { bottom: 26%; left: 46%; animation-delay: 4.5s; transform: scale(0.8); }
+.sparkle-1 { top: 10%; left: 7%; animation-delay: 0.2s; }
+.sparkle-2 { top: 18%; right: 11%; animation-delay: 1s; }
+.sparkle-3 { top: 34%; left: 24%; animation-delay: 1.8s; }
+.sparkle-4 { top: 44%; right: 23%; animation-delay: 2.6s; }
+.sparkle-5 { bottom: 24%; left: 48%; animation-delay: 3.4s; }
+.sparkle-6 { top: 12%; left: 52%; animation-delay: 0.6s; }
+.sparkle-7 { top: 62%; left: 12%; animation-delay: 2.1s; }
+.sparkle-8 { top: 70%; right: 10%; animation-delay: 4.1s; }
+.sparkle-9 { bottom: 15%; left: 30%; animation-delay: 5s; }
+.sparkle-10 { top: 28%; right: 37%; animation-delay: 3.1s; }
+.sparkle-11 { bottom: 34%; right: 42%; animation-delay: 1.3s; }
+.sparkle-12 { top: 52%; left: 67%; animation-delay: 4.7s; }
+
+.sparkle-1, .sparkle-7, .sparkle-10 { width: 18px; }
+.sparkle-2, .sparkle-6, .sparkle-11 { width: 28px; }
+.sparkle-3, .sparkle-5, .sparkle-9, .sparkle-12 { width: 20px; }
+.sparkle-4, .sparkle-8 { width: 24px; }
 
 @keyframes sparkle-drift {
   0%, 100% {
     opacity: 0;
-    transform: translate3d(0, 10px, 0) scale(0.7) rotate(0deg);
+    transform: translate3d(0, 14px, 0) scale(0.55) rotate(0deg);
   }
-  18% {
-    opacity: 0.35;
+  15% {
+    opacity: 0.2;
   }
-  35% {
+  32% {
     opacity: 0.95;
     transform: translate3d(0, 0, 0) scale(1) rotate(45deg);
   }
-  65% {
-    opacity: 0.6;
-    transform: translate3d(4px, -10px, 0) scale(0.9) rotate(90deg);
+  56% {
+    opacity: 0.85;
+    transform: translate3d(4px, -8px, 0) scale(0.92) rotate(90deg);
   }
-  82% {
-    opacity: 0.2;
+  78% {
+    opacity: 0.35;
+    transform: translate3d(-2px, -16px, 0) scale(0.72) rotate(130deg);
+  }
+}
+
+@keyframes sparkle-field {
+  0%, 100% { opacity: 0.18; }
+  35% { opacity: 0.38; }
+  65% { opacity: 0.26; }
+}
+
+@keyframes cleaning-sweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-130%) skewX(-18deg);
+  }
+  18% {
+    opacity: 0.18;
+  }
+  44% {
+    opacity: 0.6;
+  }
+  62% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(135%) skewX(-18deg);
   }
 }
 
@@ -362,6 +427,14 @@ p { color: var(--text-light); }
   .sparkle {
     animation: none;
     opacity: 0.45;
+  }
+  .hero-sparkles::before,
+  .hero-sparkles::after {
+    animation: none;
+  }
+  .hero-sparkles::after {
+    opacity: 0.18;
+    transform: translateX(0) skewX(-18deg);
   }
 }
 
