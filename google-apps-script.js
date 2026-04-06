@@ -4,9 +4,10 @@
 //  then deploy as a Web App (see SETUP.md for instructions)
 // ============================================================
 
-const NOTIFY_EMAIL = 'info@can-cleaning-co.com'; // Change to your real email
-const ADMIN_KEY    = 'Yavauo2017';
-const SHEET_NAME   = 'Bookings';
+const NOTIFY_EMAIL   = 'info@can-cleaning-co.com'; // Change to your real email
+const ADMIN_KEY      = 'Yavauo2017';
+const SHEET_NAME     = 'Bookings';
+const START_ADDRESS  = '6162 Maple Ave, Dallas, TX 75235'; // Starting point for all daily routes
 
 function doPost(e) {
   try {
@@ -97,13 +98,13 @@ function doGet(e) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-// Returns a Google Maps multi-stop URL for all bookings on a given date (yyyy-MM-dd).
+// Returns an optimized Google Maps multi-stop URL for all bookings on a given date.
 // Returns null if fewer than 2 stops exist.
 function buildRouteForDate(sheet, targetDate) {
   const rows = sheet.getDataRange().getValues();
-  // Columns (0-indexed): 0=Timestamp,1=Name,2=Phone,3=Email,4=Address,5=City,6=ZIP,
-  //                       7=Cans,8=Preferred Date,9=Service Type,10=Notes
-  const stops = [];
+  // Columns: 0=Timestamp,1=Name,2=Phone,3=Email,4=Address,5=City,6=ZIP,
+  //          7=Cans,8=Preferred Date,9=Service Type,10=Notes
+  var stops = [];
   for (var i = 1; i < rows.length; i++) {
     var rowDate = String(rows[i][8]).trim();
     if (rowDate === String(targetDate).trim()) {
@@ -114,7 +115,36 @@ function buildRouteForDate(sheet, targetDate) {
 
   if (stops.length < 2) return null;
 
-  // Google Maps directions URL with multiple waypoints
+  // Prepend home base if set
+  var origin = START_ADDRESS || stops[0];
+  var destinations = START_ADDRESS ? stops : stops.slice(1);
+  var finalStop = destinations[destinations.length - 1];
+  var waypoints = destinations.slice(0, destinations.length - 1);
+
+  // Optimize waypoint order using Apps Script's built-in Maps service
+  try {
+    if (waypoints.length > 0) {
+      var finder = Maps.newDirectionFinder()
+        .setOrigin(origin)
+        .setDestination(finalStop)
+        .setOptimizeWaypoints(true);
+
+      waypoints.forEach(function(wp) { finder.addWaypoint(wp); });
+
+      var result = finder.getDirections();
+      var order  = result.routes[0].waypoint_order;
+
+      // Rebuild stops in optimized order
+      var optimizedWaypoints = order.map(function(idx) { return waypoints[idx]; });
+      stops = [origin].concat(optimizedWaypoints).concat([finalStop]);
+    } else {
+      stops = [origin, finalStop];
+    }
+  } catch (err) {
+    // Optimization failed — fall back to original order
+    stops = [origin].concat(waypoints).concat([finalStop]);
+  }
+
   var encoded = stops.map(function(s) { return encodeURIComponent(s); });
   return 'https://www.google.com/maps/dir/' + encoded.join('/');
 }
