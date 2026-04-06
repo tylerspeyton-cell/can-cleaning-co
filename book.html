@@ -77,7 +77,7 @@
         <p style="font-size:0.9rem; color:var(--text-xlight); margin-top:8px;">Questions? Call <a href="tel:+12542298753" style="color:var(--blue); font-weight:600;">(254) 229-8753</a></p>
       </div>
 
-      <form id="booking-form" action="https://formspree.io/f/mbdppzga" method="POST" novalidate>
+      <form id="booking-form" novalidate>
         <input type="hidden" name="service_type" id="hidden-service-type" value="One-Time Cleaning" />
 
         <div class="form-row">
@@ -164,6 +164,9 @@
     }
   };
 
+  // TODO: Paste your Google Apps Script URL here after deploying
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzcrKhNet5_WuKXKCh6TRXYRoYgwE2kzm6AQ2Fy7hD2hAXwj0I2uINmPOJOLasKkaer/exec';
+
   const PAYMENT_LINKS = {
     ONE_TIME: {
       1: 'https://square.link/u/E6owlIOf',
@@ -183,36 +186,46 @@
       const btn = form.querySelector('button[type="submit"]');
       btn.textContent = 'Sending…';
       btn.disabled = true;
+
+      const serviceType = document.getElementById('hidden-service-type').value;
+      const canCount = parseInt(document.getElementById('b-cans').value) || 1;
+
+      const payload = {
+        name:           document.getElementById('b-name').value,
+        phone:          document.getElementById('b-phone').value,
+        email:          document.getElementById('b-email').value,
+        address:        document.getElementById('b-address').value,
+        city:           document.getElementById('b-city').value,
+        zip:            document.getElementById('b-zip').value,
+        cans:           serviceType === 'Monthly Plan' ? '—' : canCount,
+        preferred_date: document.getElementById('b-date').value,
+        service_type:   serviceType,
+        notes:          document.getElementById('b-notes').value,
+      };
+
       try {
-        const res = await fetch(form.action, {
+        await fetch(SCRIPT_URL, {
           method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
         });
-        if (res.ok) {
-          const serviceType = document.getElementById('hidden-service-type').value;
-          if (serviceType === 'Monthly Plan') {
-            window.location.href = PAYMENT_LINKS.MONTHLY;
-          } else {
-            const canCount = parseInt(document.getElementById('b-cans').value) || 1;
-            const payLink = PAYMENT_LINKS.ONE_TIME[canCount];
-            if (payLink) {
-              window.location.href = payLink;
-            } else {
-              alert('For 6+ cans please call us at (254) 229-8753 to book.');
-              btn.textContent = 'Continue to Payment →';
-              btn.disabled = false;
-            }
-          }
+      } catch (err) {
+        // no-cors swallows errors; proceed to payment regardless
+      }
+
+      // Redirect to Square
+      if (serviceType === 'Monthly Plan') {
+        window.location.href = PAYMENT_LINKS.MONTHLY;
+      } else {
+        const payLink = PAYMENT_LINKS.ONE_TIME[canCount];
+        if (payLink) {
+          window.location.href = payLink;
         } else {
-          btn.textContent = 'Request Booking';
+          alert('For 6+ cans please call us at (254) 229-8753 to book.');
+          btn.textContent = 'Continue to Payment →';
           btn.disabled = false;
-          alert('Something went wrong. Please call us at (254) 229-8753 to book.');
         }
-      } catch {
-        btn.textContent = 'Request Booking';
-        btn.disabled = false;
-        alert('Something went wrong. Please call us at (254) 229-8753 to book.');
       }
     });
   }
