@@ -53,6 +53,32 @@ function doPost(e) {
 
     MailApp.sendEmail(NOTIFY_EMAIL, subject, body);
 
+    // Confirmation email to customer (only if they provided an email)
+    if (data.email) {
+      var customerSubject = 'Your Can Cleaning Co. Booking is Confirmed!';
+      var customerBody = [
+        'Hi ' + data.name + ',',
+        '',
+        'Thanks for booking with Can Cleaning Co.! We\'re confirmed for ' + data.preferred_date + '.',
+        '',
+        '⚠️  IMPORTANT REMINDER:',
+        'Please make sure your trash bin(s) are EMPTY on your service date.',
+        'We clean the inside of the cans — a full bin prevents us from doing the job right!',
+        '',
+        'Your booking details:',
+        '  Service:  ' + data.service_type,
+        '  Date:     ' + data.preferred_date,
+        '  Address:  ' + data.address + ', ' + data.city + ', TX ' + data.zip,
+        '',
+        'Questions? Call or text us at (254) 229-8753.',
+        '',
+        '— The Can Cleaning Co. Team',
+        'Dallas, TX',
+      ].join('\n');
+
+      MailApp.sendEmail(data.email, customerSubject, customerBody);
+    }
+
     return ContentService
       .createTextOutput(JSON.stringify({ success: true }))
       .setMimeType(ContentService.MimeType.JSON);
@@ -147,6 +173,55 @@ function buildRouteForDate(sheet, targetDate) {
 
   var encoded = stops.map(function(s) { return encodeURIComponent(s); });
   return 'https://www.google.com/maps/dir/' + encoded.join('/');
+}
+
+// Run this daily via a time-based trigger to send day-before reminders.
+// In Apps Script: Triggers (clock icon) → Add Trigger → sendDayBeforeReminders
+// → Time-driven → Day timer → 8am–9am
+function sendDayBeforeReminders() {
+  var sheet = getSheet();
+  var rows  = sheet.getDataRange().getValues();
+
+  var tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  var tomorrowStr = Utilities.formatDate(tomorrow, Session.getScriptTimeZone(), 'yyyy-MM-dd');
+
+  for (var i = 1; i < rows.length; i++) {
+    var rowDate = String(rows[i][8]).trim();
+    if (rowDate !== tomorrowStr) continue;
+
+    var email = rows[i][3];
+    if (!email) continue;
+
+    var name        = rows[i][1];
+    var address     = rows[i][4];
+    var city        = rows[i][5];
+    var zip         = rows[i][6];
+    var serviceType = rows[i][9];
+
+    var subject = 'Reminder: Can Cleaning Tomorrow — Make Sure Your Bin is Empty!';
+    var body = [
+      'Hi ' + name + ',',
+      '',
+      'Just a friendly reminder — Can Cleaning Co. is coming TOMORROW (' + tomorrowStr + ')!',
+      '',
+      '⚠️  ACTION NEEDED:',
+      'Please make sure your trash bin(s) are EMPTY before we arrive.',
+      'We clean the inside of the cans — a full bin prevents us from doing the job right!',
+      '',
+      'Your appointment:',
+      '  Service:  ' + serviceType,
+      '  Date:     ' + tomorrowStr,
+      '  Address:  ' + address + ', ' + city + ', TX ' + zip,
+      '',
+      'Questions? Call or text us at (254) 229-8753.',
+      '',
+      'See you tomorrow!',
+      '— The Can Cleaning Co. Team',
+    ].join('\n');
+
+    MailApp.sendEmail(email, subject, body);
+  }
 }
 
 function getSheet() {
